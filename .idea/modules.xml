@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HellOnBlock.iml" filepath="$PROJECT_DIR$/HellOnBlock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HellOnBlock_api.iml" filepath="$PROJECT_DIR$/.idea/modules/HellOnBlock_api.iml" group="HellOnBlock" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HellOnBlock_main.iml" filepath="$PROJECT_DIR$/.idea/modules/HellOnBlock_main.iml" group="HellOnBlock" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HellOnBlock_test.iml" filepath="$PROJECT_DIR$/.idea/modules/HellOnBlock_test.iml" group="HellOnBlock" />
+    </modules>
+  </component>
+</project>
