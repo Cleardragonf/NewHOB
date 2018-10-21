@@ -11,6 +11,20 @@
       </configuration>
     </facet>
   </component>
+  <component name="McpModuleSettings">
+    <option name="mappingFiles">
+      <set>
+        <option value="C:\Users\chris\.gradle\caches\minecraft\de\oceanlabs\mcp\mcp_stable\43\1.12.2\srgs\mcp.exc" />
+        <option value="C:\Users\chris\.gradle\caches\minecraft\de\oceanlabs\mcp\mcp_stable\43\1.12.2\srgs\notch-srg.srg" />
+        <option value="C:\Users\chris\.gradle\caches\minecraft\de\oceanlabs\mcp\mcp_stable\43\1.12.2\srgs\notch-mcp.srg" />
+        <option value="C:\Users\chris\.gradle\caches\minecraft\de\oceanlabs\mcp\mcp_stable\43\1.12.2\srgs\srg.exc" />
+        <option value="C:\Users\chris\.gradle\caches\minecraft\de\oceanlabs\mcp\mcp_stable\43\1.12.2\srgs\mcp-srg.srg" />
+        <option value="C:\Users\chris\.gradle\caches\minecraft\de\oceanlabs\mcp\mcp_stable\43\1.12.2\srgs\mcp-notch.srg" />
+      </set>
+    </option>
+    <option name="mcpVersion" value="stable_43" />
+    <option name="minecraftVersion" value="1.12.2" />
+  </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../src/test">
@@ -21,7 +35,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="HellOnBlock_main" />
     <orderEntry type="module" module-name="HellOnBlock_api" />
-    <orderEntry type="library" name="Gradle: org.spongepowered:spongeapi:7.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/minecraft/deobfedDeps/compileDummy.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -31,18 +53,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Gradle: org.spongepowered:spongeapi:7.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2768/stable/43/forgeSrc-1.12.2-14.23.5.2768.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2768/stable/43/forgeSrc-1.12.2-14.23.5.2768-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="Gradle: com.google.inject:guice:4.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.spongepowered:plugin-meta:0.4.1" level="project" />
     <orderEntry type="library" name="Gradle: org.spongepowered:configurate-hocon:3.6" level="project" />
@@ -67,10 +79,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/minecraft/deobfedDeps/compileDummy.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2768/stable/43/forgeSrc-1.12.2-14.23.5.2768.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2768/stable/43/forgeSrc-1.12.2-14.23.5.2768-sources.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="library" name="Gradle: com.mojang:authlib:1.5.25" level="project" />
