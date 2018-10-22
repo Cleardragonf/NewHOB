@@ -52,6 +52,7 @@ public class HOB {
     public static HOB getInstance(){
         return instance;
     }
+
     @Inject public  PluginContainer pluginContainer;
     public  PluginContainer getPluginContainer() {
         return pluginContainer;
@@ -81,8 +82,8 @@ public class HOB {
         game.getCommandManager().register(this, SetDayCommand, "HOB");
 
     }
-    //the below portion of the code calls the methods for This game upon each Entity being spawned
-    @Listener
+
+    @Listener//entityData is to be fired anytime and Entity is Detected being spawned.
     public void entityData(SpawnEntityEvent event){
         CustomMobProperties spawn3 = new CustomMobProperties();
         DayCounter labelTest = new DayCounter();
