@@ -6,6 +6,8 @@ import me.Cleardragonf.HOB.ConfigurationManager;
 import me.Cleardragonf.HOB.DayCounter;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.property.block.GroundLuminanceProperty;
+import org.spongepowered.api.entity.EntityType;
+import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
@@ -38,17 +40,19 @@ public class SpawnTesting {
             Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation(spawnLocation.get(0), 50, 30);
             Location<World> Vector1 = Spawn1.get();
             SpawnDecision TimeToTry = new SpawnDecision();
+            List<EntityType> list2 = Arrays.asList(EntityTypes.BLAZE, EntityTypes.BAT);
+            Collections.shuffle(list2);
 
             if (Spawn1.isPresent()) {
                 final Double optional = Vector1.getProperty(GroundLuminanceProperty.class).get().getValue();
                 if (optional < 5) {
-                    for (int i = 0; i< (ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("Natural Spawning!", "Blaze", "#").getInt()); i++) {
+                    for (int i = 0; i< (ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("Natural Spawning!", list2.get(0).getName(), "#").getInt()); i++) {
                         Random roll = new Random();
                         int answer = roll.nextInt(100) + 1;
-                        if (answer <= (ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("Natural Spawning!", "Blaze", "%").getInt())) {
+                        if (answer <= (ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("Natural Spawning!", list2.get(0).getName(), "%").getInt())) {
                             Collections.shuffle(spawnLocation);
                             Vector1 = spawnLocation.get(0);
-                            TimeToTry.newCreeper(Vector1);
+                            TimeToTry.newCreeper(Vector1, list2);
 
                         }
                     }
