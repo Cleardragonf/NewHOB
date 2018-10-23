@@ -1,70 +1,80 @@
 package me.Cleardragonf.HOB.Spawning;
 
-import java.util.*;
-
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import me.Cleardragonf.HOB.ConfigurationManager;
 import me.Cleardragonf.HOB.DayCounter;
+import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import org.spongepowered.api.Game;
+import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.property.block.GroundLuminanceProperty;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.world.Location;
+import org.spongepowered.api.world.TeleportHelper;
 import org.spongepowered.api.world.World;
 
-public class SpawnTesting {
+public class SpawnTesting
+{
     static Random random = new Random();
 
-    public void getSpace(final Player player) {
+    public void getSpace(Player player)
+    {
         Location<World> playersLocation = player.getLocation();
-        List<Location<World>> spawnLocation = new LinkedList<>();
-        if (!(player == null)) {
-
-            for (int x = -5; x < 5; x++) {
-                for (int y = -5; y < 5; y++)
-                    for (int z = -5; z < 5; z++) {
+        List<Location<World>> spawnLocation = new LinkedList();
+        if (player != null)
+        {
+            for (int x = -10; x < 10; x++) {
+                for (int y = -5; y < 5; y++) {
+                    for (int z = -5; z < 5; z++)
+                    {
                         String coord = x + "," + y + "," + z;
-                        List<String> testing = new LinkedList<>();
+                        List<String> testing = new LinkedList();
                         int range = 10;
-                        Double newSpawnX = playersLocation.getX() + x;
-                        Double newSpawnY = playersLocation.getY() + y;
-                        Double newSpawnZ = playersLocation.getZ() + z;
-                        if (Math.pow(newSpawnX - playersLocation.getX(), 2) + Math.pow(newSpawnY - playersLocation.getY(), 2) + Math.pow(newSpawnZ - playersLocation.getZ(), 2) <= 4) {
-                            World world = Sponge.getServer().getWorld("world").get();
-                            Location<World> newSpawnLocation = new Location(world, newSpawnX, newSpawnY, newSpawnZ);
+                        Double newSpawnX = Double.valueOf(playersLocation.getX() + x);
+                        Double newSpawnY = Double.valueOf(playersLocation.getY() + y);
+                        Double newSpawnZ = Double.valueOf(playersLocation.getZ() + z);
+                        if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) <= 4.0D)
+                        {
+                            World world = (World)Sponge.getServer().getWorld("world").get();
+                            Location<World> newSpawnLocation = new Location(world, newSpawnX.doubleValue(), newSpawnY.doubleValue(), newSpawnZ.doubleValue());
                             spawnLocation.add(newSpawnLocation);
                         }
                     }
+                }
             }
             Collections.shuffle(spawnLocation);
-            Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation(spawnLocation.get(0), 50, 30);
-            Location<World> Vector1 = Spawn1.get();
+            Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation((Location)spawnLocation.get(0), 50, 30);
+            Location<World> Vector1 = (Location)Spawn1.get();
             SpawnDecision TimeToTry = new SpawnDecision();
-            List<EntityType> list2 = Arrays.asList(EntityTypes.BLAZE, EntityTypes.BAT);
+            List<EntityType> list2 = Arrays.asList(new EntityType[] { EntityTypes.BLAZE, EntityTypes.BAT });
             Collections.shuffle(list2);
-
-            if (Spawn1.isPresent()) {
-                final Double optional = Vector1.getProperty(GroundLuminanceProperty.class).get().getValue();
-                if (optional < 5) {
-                    for (int i = 0; i< (ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("Natural Spawning!", list2.get(0).getName(), "#").getInt()); i++) {
+            if (Spawn1.isPresent())
+            {
+                Double optional = (Double)((GroundLuminanceProperty)Vector1.getProperty(GroundLuminanceProperty.class).get()).getValue();
+                if (optional.doubleValue() < 5.0D) {
+                    for (int i = 0; i < ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode(new Object[] { "Natural Spawning!", ((EntityType)list2.get(0)).getName(), "#" }).getInt(); i++)
+                    {
                         Random roll = new Random();
                         int answer = roll.nextInt(100) + 1;
-                        if (answer <= (ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("Natural Spawning!", list2.get(0).getName(), "%").getInt())) {
+                        if (answer <= ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode(new Object[] { "Natural Spawning!", ((EntityType)list2.get(0)).getName(), "%" }).getInt())
+                        {
                             Collections.shuffle(spawnLocation);
-                            Vector1 = spawnLocation.get(0);
+                            Vector1 = (Location)spawnLocation.get(0);
                             TimeToTry.newCreeper(Vector1, list2);
-
                         }
                     }
-                    //Sponge.getServer().getBroadcastChannel().send(Text.of("Vector 1 is performing"));
                 } else {
                     return;
                 }
-            } else {
-                return;
             }
-
+            else {}
         }
-
     }
 }
