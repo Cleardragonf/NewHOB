@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.ImmutableList;
 import me.Cleardragonf.HOB.ConfigurationManager;
 import me.Cleardragonf.HOB.DayCounter;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
@@ -13,8 +16,12 @@ import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.property.block.GroundLuminanceProperty;
+import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.entity.EntityTypes;
+import org.spongepowered.api.entity.living.Hostile;
+import org.spongepowered.api.entity.living.animal.Animal;
+import org.spongepowered.api.entity.living.monster.Monster;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.TeleportHelper;
@@ -53,17 +60,31 @@ public class SpawnTesting
             Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation((Location)spawnLocation.get(0), 50, 30);
             Location<World> Vector1 = (Location)Spawn1.get();
             SpawnDecision TimeToTry = new SpawnDecision();
-            List<EntityType> list2 = Arrays.asList(new EntityType[] { EntityTypes.BLAZE, EntityTypes.BAT });
+
+            List<Class<? extends Entity>> classes = ImmutableList.of(Animal.class, Monster.class, Hostile.class);
+            List<EntityType> list2 = Sponge.getRegistry().getAllOf(EntityType.class).stream().filter((x) -> {
+                return classes.stream().anyMatch((y) -> {
+                    return y.isAssignableFrom(x.getEntityClass());
+                });
+            }).collect(Collectors.toList());
             Collections.shuffle(list2);
+            int weekNumber = DayCounter.getWeeklyConfig();
+            String week;
+            if(weekNumber != 5){
+                week = "Week " + weekNumber;
+            }else{
+                week = "HOB Night";
+            }
+
             if (Spawn1.isPresent())
             {
                 Double optional = (Double)((GroundLuminanceProperty)Vector1.getProperty(GroundLuminanceProperty.class).get()).getValue();
                 if (optional.doubleValue() < 5.0D) {
-                    for (int i = 0; i < ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode(new Object[] { "Natural Spawning!", ((EntityType)list2.get(0)).getName(), "#" }).getInt(); i++)
+                    for (int i = 0; i < ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getName(), week, "=====Natural Spawning=====", "Number of " + list2.get(0).getName() + "'s to attempt: ").getInt(); i++)
                     {
                         Random roll = new Random();
                         int answer = roll.nextInt(100) + 1;
-                        if (answer <= ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode(new Object[] { "Natural Spawning!", ((EntityType)list2.get(0)).getName(), "%" }).getInt())
+                        if (answer <= ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getName(), week, "=====Natural Spawning=====", "The Chance of each " + list2.get(0).getName() + "actually spawning: ").getInt())
                         {
                             Collections.shuffle(spawnLocation);
                             Vector1 = (Location)spawnLocation.get(0);

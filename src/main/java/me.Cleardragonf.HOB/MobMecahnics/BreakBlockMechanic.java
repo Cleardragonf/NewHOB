@@ -1,4 +1,4 @@
-package me.Cleardragonf.HOB.MobMechanics;
+package me.Cleardragonf.HOB.MobMecahnics;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.Property;

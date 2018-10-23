@@ -3,7 +3,6 @@ package me.Cleardragonf.HOB;
 import com.google.inject.Inject;
 import me.Cleardragonf.HOB.Commands.CommandManager;
 import me.Cleardragonf.HOB.Commands.SetDayCommand;
-import me.Cleardragonf.HOB.MobMecahnics.CustomMobProperties;
 import me.Cleardragonf.HOB.Spawning.SpawnTesting;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
@@ -85,10 +84,9 @@ public class HOB {
 
     @Listener//entityData is to be fired anytime and Entity is Detected being spawned.
     public void entityData(SpawnEntityEvent event){
-        CustomMobProperties spawn3 = new CustomMobProperties();
+
         DayCounter labelTest = new DayCounter();
 
-        spawn3.entityData(event);
         labelTest.Days();
     }
 
@@ -111,7 +109,7 @@ public class HOB {
                 SpawnTesting spawnTest = new SpawnTesting();
                 spawnTest.getSpace(player2);
             }
-        }).intervalTicks((ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("========General Week Properties========", "Time Between Waves", "Time").getLong())).submit(this);
+        }).intervalTicks((ConfigurationManager.getInstance().getConfig().getNode("========General Week Properties========", "Time Between Waves", "Time").getLong())).submit(this);
     }
 
     @Listener
