@@ -54,24 +54,18 @@ public class NaturalSpawning {
     public String Config = "Config" + test;
 
     public void Hostiles(Location<World> spawnLocation) {
-        List<String> list = Arrays.asList("BLAZE","CAVE_SPIDER","CREEPER","ENDER_CRYSTAL","ENDERMAN","GHAST","MAGMA_CUBE","PIG_ZOMBIE","SILVERFISH","SKELETON","SLIME","SPIDER","WITCH","ZOMBIE","NONE");
+        // this is the real one List<String> list = Arrays.asList("BLAZE","CAVE_SPIDER","CREEPER","ENDER_CRYSTAL","ENDERMAN","GHAST","MAGMA_CUBE","PIG_ZOMBIE","SILVERFISH","SKELETON","SLIME","SPIDER","WITCH","ZOMBIE","NONE");
+        List<String> list = Arrays.asList("BLAZE");
         Random rand = new Random();
         String listResult = list.get(rand.nextInt(list.size()));
 
         if(listResult == "BLAZE"){
-            for (int i = 0; i< (ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("Natural Spawning!", "Blaze", "#").getInt()); i++){
-                Random roll = new Random();
-                int answer = roll.nextInt(100) + 1;
-                if (answer <= (ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("Natural Spawning!", "Blaze", "%").getInt())){
                     Extent extent = spawnLocation.getExtent();
+                    SpawnTesting nextLocation = new SpawnTesting();
                     Entity entity = extent.createEntity(EntityTypes.BLAZE, spawnLocation.getPosition());
                     Entity creeper = entity;
                     extent.spawnEntity(creeper);
                     Sponge.getServer().getBroadcastChannel().send(Text.of("BLAZE"));
-                }
-
-            }
-
         }
         if(listResult == "CAVE_SPIDER"){
             for (int i = 0; i< (ConfigurationManager.getInstance().getConfig(DayCounter.getWeeklyConfig()).getNode("Natural Spawning!", "CaveSpider", "#").getInt()); i++){
