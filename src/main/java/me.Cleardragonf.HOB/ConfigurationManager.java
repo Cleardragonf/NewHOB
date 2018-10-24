@@ -82,7 +82,7 @@ public class ConfigurationManager
                             }else{
                                week = "HOB Night";
                             }
-                            this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Natural Spawning=====", "Number of " + entity.getName() + "'s to attempt: ").setComment("Any Whole Number ~99999").setValue(1);
+                            this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Natural Spawning=====", "Number of " + entity.getName() + "'s to attempt: ").setComment("Any Whole Number ~99999").setValue(10);
                             this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Natural Spawning=====", "The Chance of each " + entity.getName() + "actually spawning: ").setComment("0-100").setValue(100);
                             this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Custom Properties=====", "Enable Custom Health: ").setValue(false);
                             this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Custom Properties=====", "Custom Health: ").setValue(100);
@@ -91,12 +91,6 @@ public class ConfigurationManager
 
 
                         }
-                        //this.config1.getNode("Natural Spawning!", entity.getName(), "#").setValue("1");
-                        //this.config1.getNode("Natural Spawning!", entity.getName(), "%").setValue("100");
-                        this.config1.getNode("Custom Properties!", entity.getName(), "Health", "Enabled").setComment("Enable Custom Bat Health?").setValue("False");
-                        this.config1.getNode("Custom Properties!", entity.getName(), "Health", "Total").setComment("Total Amount of HP for a bat. Default ??").setValue("10");
-                        this.config1.getNode("Custom Properties!", entity.getName(), "Attack", "Enabled").setComment("Enable Custom Bat Damage?").setValue("False");
-                        this.config1.getNode("Custom Properties!", entity.getName(), "Attack", "Total").setComment("Total Amount of Damage for a bat. Default ??").setValue("2");
                     }
 
                     this.config1.getNode("========General Week Properties========").setComment("The Below is used for Week 1's General Configuration");

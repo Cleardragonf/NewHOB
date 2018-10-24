@@ -38,8 +38,8 @@ public class SpawnTesting
         if (player != null)
         {
             for (int x = -10; x < 10; x++) {
-                for (int y = -5; y < 5; y++) {
-                    for (int z = -5; z < 5; z++)
+                for (int y = -10; y < 10; y++) {
+                    for (int z = -10; z < 10; z++)
                     {
                         String coord = x + "," + y + "," + z;
                         List<String> testing = new LinkedList();
@@ -47,17 +47,29 @@ public class SpawnTesting
                         Double newSpawnX = Double.valueOf(playersLocation.getX() + x);
                         Double newSpawnY = Double.valueOf(playersLocation.getY() + y);
                         Double newSpawnZ = Double.valueOf(playersLocation.getZ() + z);
-                        if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) <= 4.0D)
+                        if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) <= 64.0D)
                         {
-                            World world = (World)Sponge.getServer().getWorld("world").get();
-                            Location<World> newSpawnLocation = new Location(world, newSpawnX.doubleValue(), newSpawnY.doubleValue(), newSpawnZ.doubleValue());
-                            spawnLocation.add(newSpawnLocation);
+                            if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) >= 16.0D){
+                                World world = (World)Sponge.getServer().getWorld("world").get();
+                                Location<World> newSpawnLocation = new Location(world, newSpawnX.doubleValue(), newSpawnY.doubleValue(), newSpawnZ.doubleValue());
+                                spawnLocation.add(newSpawnLocation);
+                            }
+
                         }
                     }
                 }
             }
             Collections.shuffle(spawnLocation);
-            Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation((Location)spawnLocation.get(0), 50, 30);
+            Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation((Location)spawnLocation.get(0), 2, 2);
+            while (!Spawn1.isPresent()){
+                int i = 0;
+                spawnLocation.get(i);
+                Spawn1 = Optional.ofNullable(spawnLocation.get(i));
+                i++;
+                if(((LinkedList<Location<World>>) spawnLocation).size() == i){
+                    Spawn1 = Optional.ofNullable(playersLocation);
+                }
+            }
             Location<World> Vector1 = (Location)Spawn1.get();
             SpawnDecision TimeToTry = new SpawnDecision();
 
