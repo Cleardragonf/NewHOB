@@ -61,15 +61,6 @@ public class SpawnTesting
             }
             Collections.shuffle(spawnLocation);
             Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation((Location)spawnLocation.get(0), 2, 2);
-            while (!Spawn1.isPresent()){
-                int i = 0;
-                spawnLocation.get(i);
-                Spawn1 = Optional.ofNullable(spawnLocation.get(i));
-                i++;
-                if(((LinkedList<Location<World>>) spawnLocation).size() == i){
-                    Spawn1 = Optional.ofNullable(playersLocation);
-                }
-            }
             Location<World> Vector1 = (Location)Spawn1.get();
             SpawnDecision TimeToTry = new SpawnDecision();
 
