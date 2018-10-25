@@ -105,9 +105,10 @@ public class HOB {
         Sponge.getScheduler().createTaskBuilder().execute(task ->{
             int player = Sponge.getGame().getServer().getOnlinePlayers().size();
             if(!(player == 0)){
-                Player player2 = Sponge.getServer().getOnlinePlayers().iterator().next();
-                SpawnTesting spawnTest = new SpawnTesting();
-                spawnTest.getSpace(player2);
+                for(Player a : Sponge.getServer().getOnlinePlayers()){
+                    SpawnTesting spawnTest = new SpawnTesting();
+                    spawnTest.getSpace(a);
+                }
             }
         }).intervalTicks((ConfigurationManager.getInstance().getConfig().getNode("========General Week Properties========", "Time Between Waves", "Time").getLong())).submit(this);
     }

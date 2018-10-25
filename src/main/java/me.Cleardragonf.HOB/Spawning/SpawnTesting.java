@@ -1,11 +1,7 @@
 package me.Cleardragonf.HOB.Spawning;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
@@ -37,33 +33,6 @@ public class SpawnTesting
         List<Location<World>> spawnLocation = new LinkedList();
         if (player != null)
         {
-            for (int x = -10; x < 10; x++) {
-                for (int y = -10; y < 10; y++) {
-                    for (int z = -10; z < 10; z++)
-                    {
-                        String coord = x + "," + y + "," + z;
-                        List<String> testing = new LinkedList();
-                        int range = 10;
-                        Double newSpawnX = Double.valueOf(playersLocation.getX() + x);
-                        Double newSpawnY = Double.valueOf(playersLocation.getY() + y);
-                        Double newSpawnZ = Double.valueOf(playersLocation.getZ() + z);
-                        if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) <= 64.0D)
-                        {
-                            if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) >= 16.0D){
-                                World world = (World)Sponge.getServer().getWorld("world").get();
-                                Location<World> newSpawnLocation = new Location(world, newSpawnX.doubleValue(), newSpawnY.doubleValue(), newSpawnZ.doubleValue());
-                                spawnLocation.add(newSpawnLocation);
-                            }
-
-                        }
-                    }
-                }
-            }
-            Collections.shuffle(spawnLocation);
-            Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation((Location)spawnLocation.get(0), 2, 2);
-            Location<World> Vector1 = (Location)Spawn1.get();
-            SpawnDecision TimeToTry = new SpawnDecision();
-
             List<Class<? extends Entity>> classes = ImmutableList.of(Animal.class, Monster.class, Hostile.class);
             List<EntityType> list2 = Sponge.getRegistry().getAllOf(EntityType.class).stream().filter((x) -> {
                 return classes.stream().anyMatch((y) -> {
@@ -78,6 +47,36 @@ public class SpawnTesting
             }else{
                 week = "HOB Night";
             }
+
+            for (int x = -10; x < 10; x++) {
+                for (int y = -10; y < 10; y++) {
+                    for (int z = -10; z < 10; z++)
+                    {
+                        String coord = x + "," + y + "," + z;
+                        List<String> testing = new LinkedList();
+                        int range = 10;
+                        Double newSpawnX = Double.valueOf(playersLocation.getX() + x);
+                        Double newSpawnY = Double.valueOf(playersLocation.getY() + y);
+                        Double newSpawnZ = Double.valueOf(playersLocation.getZ() + z);
+                        if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) <= Math.pow(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getName(), week, "=====Natural Spawning=====", "Maximum Range: ").getDouble(), 2))
+                        {
+                            if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) >= Math.pow(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getName(), week, "=====Natural Spawning=====", "Minimum Range: ").getDouble(), 2)){
+                                World world = (World)Sponge.getServer().getWorld("world").get();
+                                Location<World> newSpawnLocation = new Location(world, newSpawnX.doubleValue(), newSpawnY.doubleValue(), newSpawnZ.doubleValue());
+                                spawnLocation.add(newSpawnLocation);
+                            }
+
+                        }
+                    }
+                }
+            }
+            Collections.shuffle(spawnLocation);
+
+            Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation((Location)spawnLocation.get(0), 2, 2);
+
+            Location<World> Vector1 = (Location)Spawn1.get();
+            SpawnDecision TimeToTry = new SpawnDecision();
+
 
             if (Spawn1.isPresent())
             {

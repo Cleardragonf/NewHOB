@@ -84,6 +84,8 @@ public class ConfigurationManager
                             }
                             this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Natural Spawning=====", "Number of " + entity.getName() + "'s to attempt: ").setComment("Any Whole Number ~99999").setValue(10);
                             this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Natural Spawning=====", "The Chance of each " + entity.getName() + "actually spawning: ").setComment("0-100").setValue(100);
+                            this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Natural Spawning=====", "Minimum Range: ").setValue(3);
+                            this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Natural Spawning=====", "Maximum Range: ").setValue(5);
                             this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Custom Properties=====", "Enable Custom Health: ").setValue(false);
                             this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Custom Properties=====", "Custom Health: ").setValue(100);
                             this.config1.getNode("=============Entity Control============", entity.getName(), week, "=====Custom Drops=====", "Enable Custom Drops: ").setValue(false);
