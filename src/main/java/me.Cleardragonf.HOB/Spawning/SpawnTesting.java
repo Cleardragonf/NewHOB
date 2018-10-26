@@ -48,9 +48,9 @@ public class SpawnTesting
                 week = "HOB Night";
             }
 
-            for (int x = -10; x < 10; x++) {
-                for (int y = -10; y < 10; y++) {
-                    for (int z = -10; z < 10; z++)
+            for (int x = -20; x < 20; x++) {
+                for (int y = -20; y < 20; y++) {
+                    for (int z = -20; z < 20; z++)
                     {
                         String coord = x + "," + y + "," + z;
                         List<String> testing = new LinkedList();
