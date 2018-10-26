@@ -1,74 +1,77 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 package me.Cleardragonf.HOB;
 
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.text.format.TextFormat;
+import org.spongepowered.api.text.format.TextStyles;
+import org.spongepowered.api.world.storage.WorldProperties;
+
+import java.awt.*;
 
 public class DayCounter {
-
-    //this right here is used for Keeping track of the days. 1-30
     public static int days = ConfigurationManager.getInstance().getTimeTrack().getNode("========Time Tracking========", "Day: ").getInt();
-
-    //this right here is used for keeping track of the Week 1-5
     public static int CustWeek = 1;
-
-    //this right here is used for keeping track of the config 1-5
     public static int config = 1;
-
-    public void Days(){
-        long currentTime = Sponge.getGame().getServer().getDefaultWorld().get().getWorldTime();
-        long base = 23000;
-        if (31 > DayCounter.days){
-            if (base <= currentTime){
-                if(24000 >= currentTime){
-                    DayCounter.days = DayCounter.days + 1;
-                    Sponge.getGame().getServer().getDefaultWorld().get().setWorldTime(0);
-                    ConfigurationManager.getInstance().getTimeTrack().getNode("========Time Tracking========", "Day: ").setValue(days);
-                    ConfigurationManager.getInstance().saveTime();
-                    if(7 >= DayCounter.days){
-                        DayCounter.week = 1;
-                    }
-                    else if(14 >= DayCounter.days){
-                        if(8<= DayCounter.days){
-                            DayCounter.week = 2;
-                        }
-                    }
-                    else if(21 >= DayCounter.days){
-                        if(15 <= DayCounter.days){
-                            DayCounter.week = 3;
-                        }
-                    }
-                    else if(28 >= DayCounter.days){
-                        if(22 <= DayCounter.days){
-                            DayCounter.week = 4;
-                        }
-                    }
-                    else if(30 >= DayCounter.days){
-                        if(29 <= DayCounter.days){
-                            DayCounter.week = 5;
-                        }
-                    }
-                    else{
-                        DayCounter.week = 1;
-                    }
-                }
-            }
-        }else{
-            DayCounter.days = 1;
-            Sponge.getGame().getServer().getDefaultWorld().get().setWorldTime(0);
-        }
-
-
-    }
     public static int week = 1;
 
-    //this instance is responsible for getting the correct Configuration File
-    public static int getCustWeek(){
+    public DayCounter() {
+    }
+
+    public void Days() {
+        long currentTime = Sponge.getGame().getServer().getDefaultWorld().get().getWorldTime();
+        long base = 23900L;
+        if (31 > days) {
+            if (base <= currentTime && 24000L >= currentTime) {
+                ++days;
+                Sponge.getGame().getServer().getDefaultWorld().get().setWorldTime(0L);
+                ConfigurationManager.getInstance().getTimeTrack().getNode(new Object[]{"========Time Tracking========", "Day: "}).setValue(days);
+                ConfigurationManager.getInstance().saveTime();
+                if (7 >= days) {
+                    week = 1;
+                } else if (14 >= days) {
+                    if (8 <= days) {
+                        week = 2;
+                    }
+                } else if (21 >= days) {
+                    if (15 <= days) {
+                        week = 3;
+                    }
+                } else if (28 >= days) {
+                    if (22 <= days) {
+                        week = 4;
+                    }
+                } else if (30 >= days) {
+                    if (29 <= days) {
+                        Text colored = Text.builder("WELCOME PLAYERS...").color(TextColors.RED).style(TextStyles.BOLD).append(Text.builder(" TO HOB NIGHT!!!!").color(TextColors.DARK_RED).style(TextStyles.BOLD).build()).build();
+                        Sponge.getServer().getBroadcastChannel().send(Text.of(colored));
+                        week = 5;
+                    }
+                } else {
+                    week = 1;
+                }
+            }
+        } else {
+            days = 1;
+            Sponge.getGame().getServer().getDefaultWorld().get().setWorldTime(0L);
+        }
+
+    }
+
+    public static int getCustWeek() {
         return CustWeek;
     }
-    public static int getWeeklyConfig(){
+
+    public static int getWeeklyConfig() {
         return week;
     }
-    //this instance is responsible for getting the correct Days.
-    public static int getCustDays(){
+
+    public static int getCustDays() {
         return days;
     }
 }

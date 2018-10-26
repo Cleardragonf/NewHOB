@@ -125,7 +125,6 @@ public class HOB {
         ConfigurationManager.getInstance().notifyAll();
         Sponge.getServer().getBroadcastChannel().send(Text.of("HOB's Has Reloaded Successfully!!!"));
     }
-
     @Listener
     public void Ending(GameStoppingServerEvent event){
         int days = DayCounter.getCustDays();
