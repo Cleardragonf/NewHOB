@@ -56,6 +56,7 @@ public class NaturalSpawning {
                     Entity creeper = entity;
                     extent.spawnEntity(creeper);
                     Sponge.getServer().getBroadcastChannel().send(Text.of(list2.get(0).getName()));
+                    Sponge.getServer().getBroadcastChannel().send(Text.of(list2.get(0).getId()));
     }
     public String getVariableConfig1(){
         return Config;

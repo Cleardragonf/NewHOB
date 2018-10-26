@@ -58,9 +58,9 @@ public class SpawnTesting
                         Double newSpawnX = Double.valueOf(playersLocation.getX() + x);
                         Double newSpawnY = Double.valueOf(playersLocation.getY() + y);
                         Double newSpawnZ = Double.valueOf(playersLocation.getZ() + z);
-                        if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) <= Math.pow(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getName(), week, "=====Natural Spawning=====", "Maximum Range: ").getDouble(), 2))
+                        if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) <= Math.pow(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Natural Spawning=====", "Maximum Range: ").getDouble(), 2))
                         {
-                            if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) >= Math.pow(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getName(), week, "=====Natural Spawning=====", "Minimum Range: ").getDouble(), 2)){
+                            if (Math.pow(newSpawnX.doubleValue() - playersLocation.getX(), 2.0D) + Math.pow(newSpawnY.doubleValue() - playersLocation.getY(), 2.0D) + Math.pow(newSpawnZ.doubleValue() - playersLocation.getZ(), 2.0D) >= Math.pow(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Natural Spawning=====", "Minimum Range: ").getDouble(), 2)){
                                 World world = (World)Sponge.getServer().getWorld("world").get();
                                 Location<World> newSpawnLocation = new Location(world, newSpawnX.doubleValue(), newSpawnY.doubleValue(), newSpawnZ.doubleValue());
                                 spawnLocation.add(newSpawnLocation);
@@ -82,11 +82,11 @@ public class SpawnTesting
             {
                 Double optional = (Double)((GroundLuminanceProperty)Vector1.getProperty(GroundLuminanceProperty.class).get()).getValue();
                 if (optional.doubleValue() < 5.0D) {
-                    for (int i = 0; i < ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getName(), week, "=====Natural Spawning=====", "Number of " + list2.get(0).getName() + "'s to attempt: ").getInt(); i++)
+                    for (int i = 0; i < ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Natural Spawning=====", "Number of " + list2.get(0).getName() + "'s to attempt: ").getInt(); i++)
                     {
                         Random roll = new Random();
                         int answer = roll.nextInt(100) + 1;
-                        if (answer <= ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getName(), week, "=====Natural Spawning=====", "The Chance of each " + list2.get(0).getName() + "actually spawning: ").getInt())
+                        if (answer <= ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Natural Spawning=====", "The Chance of each " + list2.get(0).getName() + "actually spawning: ").getInt())
                         {
                             Collections.shuffle(spawnLocation);
                             Vector1 = (Location)spawnLocation.get(0);
