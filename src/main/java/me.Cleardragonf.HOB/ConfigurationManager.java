@@ -88,8 +88,14 @@ public class ConfigurationManager
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Natural Spawning=====", "Maximum Range: ").setValue(5);
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Enable Custom Health: ").setValue(false);
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Custom Health: ").setValue(100);
+                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Enable Custom Explosion: ").setValue(false);
+                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Explosion Radius: ").setValue(10);
+                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Custom Health: ").setValue(100);
+
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Drops=====", "Enable Custom Drops: ").setValue(false);
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Drops=====", "Custom Drops: ").setValue("");
+                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Monetary Benifits=====", "Per Kill: ").setComment("For Each Kill this is what you recieve").setValue(5);
+
 
 
                         }

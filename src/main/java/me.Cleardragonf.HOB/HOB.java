@@ -1,23 +1,31 @@
 package me.Cleardragonf.HOB;
 
 import com.google.inject.Inject;
+import me.Cleardragonf.HOB.AddOns.EcoRewards;
 import me.Cleardragonf.HOB.Commands.CommandManager;
 import me.Cleardragonf.HOB.Commands.SetDayCommand;
+import me.Cleardragonf.HOB.MobMecahnics.CustomMobProperties;
 import me.Cleardragonf.HOB.Spawning.SpawnTesting;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.entity.EntityType;
+import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.entity.SpawnEntityEvent;
 import org.spongepowered.api.event.game.GameReloadEvent;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
+import org.spongepowered.api.event.service.ChangeServiceProviderEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.api.service.economy.EconomyService;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 
 import java.io.Console;
 import java.io.File;
@@ -62,7 +70,14 @@ public class HOB {
     @ConfigDir(sharedRoot = false)
     private File configDir;
 
-
+    @Listener
+    public  void enderDragon(SpawnEntityEvent event){
+        if(event.getSource().equals(EntityTypes.ENDER_DRAGON)){
+            CustomMobProperties enderDragon = new CustomMobProperties();
+            enderDragon.entityData(event);
+            Sponge.getServer().getBroadcastChannel().send(Text.of("TRYING TO SPAWN AN ENDERDRAGON"));
+        }
+    }
 
     @Listener
     public void allhands(GamePreInitializationEvent event){
@@ -104,8 +119,6 @@ public class HOB {
     @Listener
     public void SpawnTracking(GameStartedServerEvent event){
         Sponge.getScheduler().createTaskBuilder().execute(task ->{
-            int player = Sponge.getGame().getServer().getOnlinePlayers().size();
-            if(!(player == 0)){
                 for(Player a: Sponge.getServer().getOnlinePlayers()){
                     if(a.getWorld().getName() != "DIM144"){
                         Player player2 = Sponge.getServer().getOnlinePlayers().iterator().next();
@@ -115,9 +128,27 @@ public class HOB {
                         logger.info(a.getName() + " is currently sitting in a Compact Machine");
                     }
                 }
-            }
         }).intervalTicks((ConfigurationManager.getInstance().getConfig().getNode("========General Week Properties========", "Time Between Waves", "Time").getLong())).submit(this);
     }
+
+    @Listener
+    public void payPlayers(GameInitializationEvent event){
+        Sponge.getEventManager().registerListeners(this, new EcoRewards());
+    }
+
+    private static EconomyService economyService;
+    @Listener
+    public void onChangeServiceProvider(ChangeServiceProviderEvent event){
+        if(event.getService().equals(EconomyService.class)){
+            economyService = (EconomyService) event.getNewProviderRegistration().getProvider();
+        }
+        Sponge.getGame().getServer().getBroadcastChannel().send(Text.of(TextColors.GOLD, "Change Service is working"));
+
+    }
+    public static EconomyService getEcon(){
+        return economyService;
+    }
+
 
     @Listener
     public void reloading(GameReloadEvent event){
@@ -131,5 +162,6 @@ public class HOB {
         ConfigurationManager.getInstance().getTimeTrack().getNode("========Time Tracking========", "Day: ").setValue(days);
         ConfigurationManager.getInstance().saveTime();
     }
+
 
 }
