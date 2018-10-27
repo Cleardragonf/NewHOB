@@ -37,7 +37,7 @@ public class ConfigurationManager
 
     public void enable()
     {
-        File Week1 = new File(this.configDir, "Week1.conf");
+        File Week1 = new File(this.configDir, "Entity.conf");
         File TimeTrackerTime = new File(this.configDir, "TimeTracking.conf");
 
         this.configLoader1 = HoconConfigurationLoader.builder().setFile(Week1).build();
@@ -73,7 +73,7 @@ public class ConfigurationManager
                             return y.isAssignableFrom(x.getEntityClass());
                         });
                     }).collect(Collectors.toList());
-                    this.config1.getNode("=============Entity Control============").setComment("This Portion of the Config is dedicated to the Control of Entiies");
+                    this.config1.getNode("=============Entity Control============").setComment("This Portion of the Config is dedicated to the Control of Entities");
                     for (EntityType entity : cet){
                         for (int weekNumber = 1; weekNumber <= 5; weekNumber++) {
                             String week = null;
@@ -87,11 +87,14 @@ public class ConfigurationManager
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Natural Spawning=====", "Minimum Range: ").setValue(3);
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Natural Spawning=====", "Maximum Range: ").setValue(5);
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Enable Custom Health: ").setValue(false);
+                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Enable Anger: ").setValue(false);
+                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Enable Custom Projectile Damage: ").setValue(false);
+                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Projectile Damage: ").setValue(10);
+                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Enable Custom Explosion Damage: ").setValue(false);
+                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Explosion Radius: ").setValue(5);
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Custom Health: ").setValue(100);
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Enable Custom Explosion: ").setValue(false);
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Explosion Radius: ").setValue(10);
-                            this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Properties=====", "Custom Health: ").setValue(100);
-
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Drops=====", "Enable Custom Drops: ").setValue(false);
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Custom Drops=====", "Custom Drops: ").setValue("");
                             this.config1.getNode("=============Entity Control============", entity.getId(), week, "=====Monetary Benifits=====", "Per Kill: ").setComment("For Each Kill this is what you recieve").setValue(5);
