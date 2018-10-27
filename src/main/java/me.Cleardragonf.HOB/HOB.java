@@ -4,17 +4,25 @@ import com.google.inject.Inject;
 import me.Cleardragonf.HOB.AddOns.EcoRewards;
 import me.Cleardragonf.HOB.Commands.CommandManager;
 import me.Cleardragonf.HOB.Commands.SetDayCommand;
+import me.Cleardragonf.HOB.MobMecahnics.BreakBlockMechanic;
 import me.Cleardragonf.HOB.MobMecahnics.CustomMobProperties;
 import me.Cleardragonf.HOB.Spawning.SpawnTesting;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.data.Property;
+import org.spongepowered.api.data.property.block.PassableProperty;
+import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.entity.EntityTypes;
+import org.spongepowered.api.entity.ai.task.builtin.creature.AttackLivingAITask;
+import org.spongepowered.api.entity.living.Agent;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.entity.AttackEntityEvent;
 import org.spongepowered.api.event.entity.SpawnEntityEvent;
+import org.spongepowered.api.event.entity.ai.AITaskEvent;
 import org.spongepowered.api.event.game.GameReloadEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
@@ -26,6 +34,7 @@ import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.service.economy.EconomyService;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.util.blockray.BlockRay;
 
 import java.io.Console;
 import java.io.File;
@@ -72,10 +81,19 @@ public class HOB {
 
     @Listener
     public  void enderDragon(SpawnEntityEvent event){
-        if(event.getSource().equals(EntityTypes.ENDER_DRAGON)){
-            CustomMobProperties enderDragon = new CustomMobProperties();
-            enderDragon.entityData(event);
-            Sponge.getServer().getBroadcastChannel().send(Text.of("TRYING TO SPAWN AN ENDERDRAGON"));
+        Entity spawnedEntity = null;
+        for(Entity entity : event.getEntities()){
+            if(entity != null){
+                spawnedEntity = entity;
+                break;
+            }
+        }
+        if(spawnedEntity == null){
+            return;
+        }
+        if(spawnedEntity.equals(EntityTypes.CREEPER)){
+            BreakBlockMechanic test = new BreakBlockMechanic();
+            test.onEntitySpawn((EntityType) spawnedEntity);
         }
     }
 
