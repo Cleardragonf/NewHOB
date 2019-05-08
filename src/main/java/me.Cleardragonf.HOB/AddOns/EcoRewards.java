@@ -78,9 +78,18 @@ public class EcoRewards {
             String entity = event.getTargetEntity().getType().getName();
             String entity2 = event.getTargetEntity().getType().getId();
             Cause cause = event.getCause();
-            BigDecimal bd = new BigDecimal(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", entity2, week, "=====Monetary Benifits=====", "Per Kill: ").getString());
-            player.sendMessage(Text.of("You Killed a " + entity + "  & earned " + bd));
-            HOB.getEcon().getOrCreateAccount(player2).get().deposit(HOB.getEcon().getDefaultCurrency(), bd, cause);
+            if(!ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", entity2, week, "=====Monetary Benifits=====", "Per Kill: ").isVirtual()){
+                BigDecimal bd = new BigDecimal(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", entity2, week, "=====Monetary Benifits=====", "Per Kill: ").getString());
+                player.sendMessage(Text.of("You Killed a " + entity + "  & earned " + bd));
+                HOB.getEcon().getOrCreateAccount(player2).get().deposit(HOB.getEcon().getDefaultCurrency(), bd, cause);
+            }else{
+
+                BigDecimal bd = new BigDecimal("5.00");
+                player.sendMessage(Text.of("You Killed a " + entity + " and will be paid $5"));
+                HOB.getEcon().getOrCreateAccount(player2).get().deposit(HOB.getEcon().getDefaultCurrency(), bd, cause);
+                Sponge.getServer().getConsole().sendMessage(Text.of("Need the following added to HOB config : " + entity2));
+            }
+
 
         }
 
@@ -93,9 +102,24 @@ public class EcoRewards {
             String entity = event.getTargetEntity().getType().getName();
             String entity2 = event.getTargetEntity().getType().getId();
             Cause cause = event.getCause();
-            BigDecimal bd = new BigDecimal(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", entity2, week, "=====Monetary Benifits=====", "Per Kill: ").getString());
-            player.sendMessage(Text.of("You Killed a " + entity + "  & earned " + bd));
-            HOB.getEcon().getOrCreateAccount(player2).get().deposit(HOB.getEcon().getDefaultCurrency(), bd, cause);
+            //if(entity2 == null){
+              //  BigDecimal bd = new BigDecimal("5.00");
+                //player.sendMessage(Text.of("You Killed an unknown entity you've earned $5.00"));
+                //HOB.getEcon().getOrCreateAccount(player2).get().deposit(HOB.getEcon().getDefaultCurrency(), bd, cause);
+                //Sponge.getServer().getConsole().sendMessage(Text.of(entity2 + " and it's name " + entity));
+            //}
+            if(!ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", entity2, week, "=====Monetary Benifits=====", "Per Kill: ").isVirtual()){
+                BigDecimal bd = new BigDecimal(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", entity2, week, "=====Monetary Benifits=====", "Per Kill: ").getString());
+                player.sendMessage(Text.of("You Killed a " + entity + "  & earned " + bd));
+                HOB.getEcon().getOrCreateAccount(player2).get().deposit(HOB.getEcon().getDefaultCurrency(), bd, cause);
+            }else{
+
+                BigDecimal bd = new BigDecimal("5.00");
+                player.sendMessage(Text.of("You Killed a " + entity + " and will be paid $5"));
+                HOB.getEcon().getOrCreateAccount(player2).get().deposit(HOB.getEcon().getDefaultCurrency(), bd, cause);
+                Sponge.getServer().getConsole().sendMessage(Text.of("Need the following added to HOB config : " + entity2));
+            }
+
 
         }else{
             //USED TO DETECT OTHERWAYS OF KILLING SOMETHING?

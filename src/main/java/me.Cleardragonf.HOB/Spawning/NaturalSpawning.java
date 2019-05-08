@@ -72,9 +72,11 @@ public class NaturalSpawning {
         }
         Extent extent = spawnLocation.getExtent();
         SpawnTesting nextLocation = new SpawnTesting();
+
         Entity entity = extent.createEntity(list2.get(0), spawnLocation.getPosition());
         Entity creeper = entity;
         creeper.offer(Keys.GLOWING, true);
+
         if(creeper.supports(Keys.HEALTH)){
             if(ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Custom Properties=====", "Enable Custom Health: ").getBoolean() == true){
                 creeper.offer(Keys.MAX_HEALTH, ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Custom Properties=====", "Custom Health: ").getDouble());
@@ -99,8 +101,8 @@ public class NaturalSpawning {
             }
         }
         extent.spawnEntity(creeper);
-        Sponge.getServer().getBroadcastChannel().send(Text.of(list2.get(0).getName()));
-        Sponge.getServer().getBroadcastChannel().send(Text.of(list2.get(0).getId()));
+        ///Sponge.getServer().getBroadcastChannel().send(Text.of(list2.get(0).getName()));
+        //Songe.getServer().getBroadcastChannel().send(Text.of(list2.get(0).getId()));
     }
     public String getVariableConfig1(){
         return Config;

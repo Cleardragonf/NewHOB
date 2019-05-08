@@ -8,6 +8,7 @@ import me.Cleardragonf.HOB.MobMecahnics.BreakBlockMechanic;
 import me.Cleardragonf.HOB.MobMecahnics.CustomMobProperties;
 import me.Cleardragonf.HOB.Spawning.SpawnTesting;
 import org.spongepowered.api.Game;
+import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.ConfigDir;
@@ -127,6 +128,7 @@ public class HOB {
     //========Game Schedulers ========
     @Listener
     public void daytracker3(GameStartedServerEvent event){
+        Sponge.getServer().getDefaultWorld().get().setWorldTime((ConfigurationManager.getInstance().getTimeTrack().getNode("========Time Tracking========", "Time: ").getLong()));
 
         Sponge.getScheduler().createTaskBuilder().execute(task -> {
             DayCounter getStarted = new DayCounter();
@@ -177,7 +179,9 @@ public class HOB {
     @Listener
     public void Ending(GameStoppingServerEvent event){
         int days = DayCounter.getCustDays();
+        long time = Sponge.getServer().getDefaultWorld().get().getWorldTime();
         ConfigurationManager.getInstance().getTimeTrack().getNode("========Time Tracking========", "Day: ").setValue(days);
+        ConfigurationManager.getInstance().getTimeTrack().getNode("========Time Tracking========", "Time: ").setValue(time);
         ConfigurationManager.getInstance().saveTime();
     }
 

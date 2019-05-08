@@ -67,7 +67,7 @@ public class ConfigurationManager
                 {
                     Week1.createNewFile();
                     load1();
-                    List<Class<? extends Entity>> classes = ImmutableList.of(Animal.class, Monster.class, Hostile.class);
+                    List<Class<? extends Entity>> classes = ImmutableList.of(Monster.class, Hostile.class);
                     List<EntityType> cet = Sponge.getRegistry().getAllOf(EntityType.class).stream().filter((x) -> {
                         return classes.stream().anyMatch((y) -> {
                             return y.isAssignableFrom(x.getEntityClass());

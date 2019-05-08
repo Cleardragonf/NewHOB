@@ -20,7 +20,7 @@ public class CommandManager implements CommandExecutor {
         int day = DayCounter.getCustDays();
 
         if(!(src instanceof Player)){
-            src.sendMessage(Text.of(TextColors.GREEN, "Hello Console!"));
+            src.sendMessage(Text.of(TextColors.GREEN, "Time on the Server is: " + time + ", on the " + day + " day of the month"));
             return CommandResult.success();
         }
         Player player = (Player)src;

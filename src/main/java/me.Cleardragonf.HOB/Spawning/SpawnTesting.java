@@ -11,6 +11,7 @@ import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.data.property.block.GroundLuminanceProperty;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityType;
@@ -19,6 +20,9 @@ import org.spongepowered.api.entity.living.Hostile;
 import org.spongepowered.api.entity.living.animal.Animal;
 import org.spongepowered.api.entity.living.monster.Monster;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.util.AABB;
+import org.spongepowered.api.util.Direction;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.TeleportHelper;
 import org.spongepowered.api.world.World;
@@ -33,7 +37,7 @@ public class SpawnTesting
         List<Location<World>> spawnLocation = new LinkedList();
         if (player != null)
         {
-            List<Class<? extends Entity>> classes = ImmutableList.of(Animal.class, Monster.class, Hostile.class);
+            List<Class<? extends Entity>> classes = ImmutableList.of(Monster.class, Hostile.class);
             List<EntityType> list2 = Sponge.getRegistry().getAllOf(EntityType.class).stream()
                     .filter((x) -> classes.stream().anyMatch((y) -> y.isAssignableFrom(x.getEntityClass())))
                     .filter((p) -> !p.equals(EntityTypes.ENDER_DRAGON))
@@ -51,7 +55,6 @@ public class SpawnTesting
                 for (int y = -20; y < 20; y++) {
                     for (int z = -20; z < 20; z++)
                     {
-                        String coord = x + "," + y + "," + z;
                         List<String> testing = new LinkedList();
                         int range = 10;
                         Double newSpawnX = Double.valueOf(playersLocation.getX() + x);
@@ -69,37 +72,39 @@ public class SpawnTesting
                     }
                 }
             }
-            Collections.shuffle(spawnLocation);
-
-            Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation((Location)spawnLocation.get(0));
 
 
-            SpawnDecision TimeToTry = new SpawnDecision();
 
 
-            if (Spawn1.isPresent())
-            {
-                Location<World> Vector1 = (Location)Spawn1.get();
-                Double optional = (Double)((GroundLuminanceProperty)Vector1.getProperty(GroundLuminanceProperty.class).get()).getValue();
-                if (optional.doubleValue() < 5.0D) {
-                    for (int i = 0; i < ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Natural Spawning=====", "Number of " + list2.get(0).getName() + "'s to attempt: ").getInt(); i++)
-                    {
-                        Random roll = new Random();
-                        int answer = roll.nextInt(100) + 1;
-                        if (answer <= ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Natural Spawning=====", "The Chance of each " + list2.get(0).getName() + "actually spawning: ").getInt())
-                        {
-                            Collections.shuffle(spawnLocation);
-                            Vector1 = (Location)spawnLocation.get(0);
-                            TimeToTry.newCreeper(Vector1, list2);
+
+
+                    for (int i = 1; i < ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Natural Spawning=====", "Number of " + list2.get(0).getName() + "'s to attempt: ").getInt(); i++) {
+
+                        Collections.shuffle(spawnLocation);
+                        Optional<Location<World>> Spawn1 = Sponge.getGame().getTeleportHelper().getSafeLocation((Location) spawnLocation.get(0));
+                        Location<World> Vector1 = (Location) Spawn1.get();
+                        Double optional = (Double) ((GroundLuminanceProperty) Vector1.getProperty(GroundLuminanceProperty.class).get()).getValue();
+                        SpawnDecision TimeToTry = new SpawnDecision();
+                        if (optional.doubleValue() < 5.0D) {
+                            if (Spawn1.isPresent()) {
+                                Sponge.getServer().getBroadcastChannel().send(Text.of(Vector1.getBlockRelative(Direction.UP).getBlockType().toString()));
+                                    Random roll = new Random();
+                                    int answer = roll.nextInt(100) + 1;
+                                    if (answer <= ConfigurationManager.getInstance().getConfig().getNode("=============Entity Control============", list2.get(0).getId(), week, "=====Natural Spawning=====", "The Chance of each " + list2.get(0).getName() + "actually spawning: ").getInt()) {
+                                        Collections.shuffle(spawnLocation);
+                                        TimeToTry.newCreeper(Vector1, list2);
+                                }else{
+                                }
+                            }else{
+                                return;
+                            }
+                        }else {
+                            return;
                         }
                     }
-                } else {
-                    return;
-                }
-            }
-            else {
 
             }
+            else {
         }
     }
 }
